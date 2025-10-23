@@ -6,7 +6,7 @@
     sg_id: sg-0fd0aa1e150fc139a
     zone_id: Z08089562F0RKY95DDUU9
     domain_name: awspractice.store
-  instances:
+    instances:
     - mongodb
   tasks:
   - name: creating ec2 instance
