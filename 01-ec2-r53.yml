@@ -1,6 +1,6 @@
 - name: create ec2 and route 53
   hosts: local
-  connections: local
+  connection: local
   vars:
     ami_id: ami-09c813fb71547fc4f
     sg_id: sg-0fd0aa1e150fc139a
@@ -13,8 +13,8 @@
     amazon.aws.ec2_instance:
       name: "{{ item }}"
       instance_type: t3.micro
-      security_group: {{ sg_id }}
-      image_id: {{ ami_id }}
+      security_group: "{{ sg_id }}"
+      image_id: "{{ ami_id }}"
       tags:
         name: "{{ item }}"     
     loop: "{{ instances }}"
