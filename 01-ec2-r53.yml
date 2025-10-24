@@ -10,7 +10,7 @@
     - mongodb
     - mysql
     - rabbitmq
-    
+    - redis
   tasks:
   - name: creating ec2 instance
     amazon.aws.ec2_instance:
