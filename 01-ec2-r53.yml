@@ -8,6 +8,9 @@
     domain_name: awspractice.store
     instances:
     - mongodb
+    - mysql
+    - rabbitmq
+    
   tasks:
   - name: creating ec2 instance
     amazon.aws.ec2_instance:
