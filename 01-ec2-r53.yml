@@ -7,10 +7,10 @@
     zone_id: Z08089562F0RKY95DDUU9
     domain_name: awspractice.store
     instances:
-    - mongodb
-    - mysql
-    - rabbitmq
-    - redis
+    # - mongodb
+    # - mysql
+    # - rabbitmq
+    # - redis
   tasks:
   - name: creating ec2 instance
     amazon.aws.ec2_instance:
