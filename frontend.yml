@@ -46,7 +46,7 @@
 
   - name: restart ngix
     ansible.builtin.service:
-      state: started
+      state: restarted
       name: frontend 
       enabled: yes
       
