@@ -2,23 +2,15 @@
   hosts: payment
   become: yes
   tasks:
-  - name: installing maven
+  - name: install python packages
     ansible.builtin.package:
       name: "{{ item }}"
       state: present
     loop:
-    - maven
-    - mysql
-  - name: installing python mysql libraries
-    ansible.builtin.pip:
-      name: "{{ item }}"
-      executable: pip3.13
-    loop:
-    - PyMySQL
-    - cryptography
-
-
-  - name: adding robosho user
+    - python3
+    - gcc
+    - python3-devel
+    - name: adding robosho user
     ansible.builtin.user:
         name: roboshop
         comment: roboshop system user
@@ -37,18 +29,37 @@
       path: /app
       state: directory
 
-  - name: removing the shipping application
+  - name: removing the payment application
     ansible.builtin.file:
-        path: /tmp/shipping.zip
+        path: /tmp/payment.zip
         state: absent
 
-  - name: downloading the shipping application
+  - name: downloading the payment application
     ansible.builtin.get_url:
-      url: https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip 
-      dest: /tmp/shipping.zip
+      url: https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip 
+      dest: /tmp/payment.zip
 
-  - name: unzip the shipping file
+  - name: unzip the payment file
     ansible.builtin.unarchive:
-      src: /tmp/shipping.zip
+      src: /tmp/payment.zip
       dest: /app
       remote_src: true
+
+  - name: installing dependencies
+    ansible.builtin.pip:
+      requirements: requirements.txt
+      executable: 3.9
+    args:
+      chdir: /app
+
+  - name: copy payment service file
+    ansible.builtin.copy:
+      src: payment.service
+      dest: /etc/systemd/system/payment.service
+  
+  - name: daemon reload and start services
+    ansible.builtin.systemd_service:
+      state: started
+      name: payment 
+      enabled: yes
+      daemon_reload: true
