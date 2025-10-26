@@ -10,5 +10,5 @@ compose:
   ansible_host: private_ip_address
 keyed_groups:
   - key: tags.Name
-    prefix: "dynamic"
+    prefix: "dynamic" # dynamic_frontend
     separator: "_"
